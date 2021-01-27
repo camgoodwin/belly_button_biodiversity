@@ -1,4 +1,4 @@
-function init() {
+ function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
 
@@ -17,11 +17,11 @@ function init() {
     var firstSample = sampleNames[0];
     buildCharts(firstSample);
     buildMetadata(firstSample);
-  });
+ });
 }
 
 // Initialize the dashboard
-init();
+ init();
 
 function optionChanged(newSample) {
   // Fetch new data each time a new sample is selected
@@ -60,17 +60,20 @@ function buildCharts(sample) {
     console.log(data);
     // 3. Create a variable that holds the samples array. 
     var samplesArrary = data.samples;
+    console.log(samplesArrary)
     // 4. Create a variable that filters the samples for the object with the desired sample number.
-    var numberSample = samplesArrary.filter(sampleObj => sampleObj.id == samplesArrary);
+    var numberSample = samplesArrary.filter(sampleObj => sampleObj.id == sample);
+    console.log(numberSample)
     //  5. Create a variable that holds the first sample in the array.
     var starterSample = samplesArrary[0];
-
+  
 
     // 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
     var otu_ids = numberSample.map(x => x.otu_ids);
+    console.log(otu_ids)
     var otu_labels = numberSample.map(x => x.otu_labels);
     var sample_values = numberSample.map(x => x.sample_values);
-
+    console.log(sample_values)
 
     // 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order  
@@ -79,27 +82,36 @@ function buildCharts(sample) {
     var topOtuIds = otu_ids.slice(0,10); 
 
     var yticks = reverseIDs
+    console.log(yticks)
 
     // 8. Create the trace for the bar chart. 
-    var barData = {
-      x: otu_ids,
-      y: sample_values,
-      type: "bar"
+    var barData = [{
+      x: sample_values,
+      y: yticks,
+      type: 'bar'
             
-    };
+    }];
+    console.table(barData)
+    //var first_chart = [barData];
 
-    Plotly.newPlot("bar", barData, barLayout);
     // 9. Create the layout for the bar chart. 
     var barLayout = {
-      title: "Belly Button Biodiversity Dashboard"
-    };
+      title: "Belly Button Biodiversity Dashboard",
+      xaxis: {title: 'Sample Values'}
+    }
     // 10. Use Plotly to plot the data with the layout. 
-    Plotly.newPlot("bar", barData, barLayout);
+    // Plotly.newPlot("bar", first_chart, barLayout);
+    //let bar = document.getElementByID("bar");
+    Plotly.newPlot('bar', barData, barLayout);
   });
 
- // Use Plotly to plot the data with the layout. 
+    //  // Use Plotly to plot the data with the layout. 
+// 1. Create the buildCharts function.
+// function buildCharts(sample) {
+//   // 2. Use d3.json to load and retrieve the samples.json file 
+//   d3.json("samples.json").then((data) => {
+//     console.log(data);
 
- // 1. Create the buildCharts function.
 
     // 1. Create the trace for the bubble chart.
     var bubbleData = {
@@ -124,6 +136,7 @@ function buildCharts(sample) {
     };
 
     // 3. Use Plotly to plot the data with the layout.
+    //let bubble = document.getElementByID('bubble');
     Plotly.newPlot("bubble", bubbleData, bubbleLayout);
   
  //1. Create a variable that filters the metadata array for the object with the desired sample number.    
@@ -140,6 +153,13 @@ function buildCharts(sample) {
 
 //     // 3. Create a variable that holds the washing frequency.
       var washingFreq = parseFloat(metadata.washingFreq)
+  
+
+// 1. Create the buildCharts function.
+// function buildCharts(sample) {
+//   // 2. Use d3.json to load and retrieve the samples.json file 
+//   d3.json("samples.json").then((data) => {
+//     console.log(data);
 
  // D2: 3. Use Plotly to plot the data with the layout.
    
@@ -164,4 +184,5 @@ function buildCharts(sample) {
 
     // 6. Use Plotly to plot the gauge data and layout.
     Plotly.newPlot("gauge", gaugeData, gaugeLayout);
+    
 }
