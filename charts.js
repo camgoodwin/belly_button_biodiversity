@@ -112,9 +112,7 @@ function buildCharts(sample) {
     var gaugeData = {
       domain: otu_labels,
       value: 2,
-      title: {"Belly Button Washing Frequency" :{
-          subtitle: "Scrubs per Week"}
-      },
+      title: "Belly Button Washing Frequency",
       type: "indicator",
       mode: "gauge+number",
       gauge: {

@@ -1,0 +1,12 @@
+body {
+
+    color: #483D8B;
+    
+}
+  
+.jumbotron {
+    background-image: url("blue.PNG");
+    background-size: cover;
+    text-align: center;
+    height: 100%
+  }
